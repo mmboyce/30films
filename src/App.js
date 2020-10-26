@@ -1,4 +1,6 @@
+import React from 'react';
 import logo from './logo.svg';
+import tmdbPrimaryFull from './tmdb_primary_full.svg';
 import './App.css';
 
 function App() {
@@ -7,7 +9,11 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit
+          {' '}
+          <code>src/App.js</code>
+          {' '}
+          and save to reload.
         </p>
         <a
           className="App-link"
@@ -17,6 +23,12 @@ function App() {
         >
           Learn React
         </a>
+        <div className="tmdb-powered-by">
+          <p>Powered By:</p>
+          <a href="https://www.themoviedb.org/">
+            <img src={tmdbPrimaryFull} className="tmdb-logo" alt="tmdb" />
+          </a>
+        </div>
       </header>
     </div>
   );

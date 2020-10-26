@@ -7,6 +7,18 @@
   pointer-events: none;
 }
 
+.tmdb-powered-by {
+  width: 100%;
+  margin: 1vh 0;
+  padding: 3vh 0;
+  background-color: #0d253f;
+  color: #90cea1;
+}
+
+.tmdb-logo {
+  height: 5em;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
