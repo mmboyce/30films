@@ -16,9 +16,9 @@ export default function Home(props) {
   const { apiPath } = props;
 
   return (
-    <Container fluid className="home px-0">
+    <Container fluid className="home">
       <Row>
-        <Col>
+        <Col className="px-0">
           <Row className="mx-auto text-white">
             <Col lg={{ span: 4, offset: 2 }} className="intro-bg py-2">
               <Intro />
@@ -29,7 +29,7 @@ export default function Home(props) {
               <Film apiPath={apiPath} />
             </Col>
           </Row>
-          <Row>
+          <Row className="mx-auto">
             <Credit />
           </Row>
         </Col>
