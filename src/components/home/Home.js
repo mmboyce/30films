@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import './Home.css';
 import PropTypes from 'prop-types';
 
 import Container from 'react-bootstrap/Container';
@@ -11,23 +10,30 @@ import Intro from '../intro/Intro';
 import Credit from '../credit/Credit';
 import Film from '../film/Film';
 
+import './Home.css';
+
 export default function Home(props) {
   const { apiPath } = props;
 
   return (
-    <Container fluid className="mx-0">
-      <Col>
-        {apiPath}
-        <Row>
-          <Intro />
-        </Row>
-        <Row>
-          <Film apiPath={apiPath} />
-        </Row>
-        <Row>
-          <Credit />
-        </Row>
-      </Col>
+    <Container fluid className="home px-0">
+      <Row>
+        <Col>
+          <Row className="mx-auto text-white">
+            <Col lg={{ span: 4, offset: 2 }} className="intro-bg py-2">
+              <Intro />
+            </Col>
+          </Row>
+          <Row className="mx-auto">
+            <Col lg={{ span: 4, offset: 2 }} className="film-bg py-4">
+              <Film apiPath={apiPath} />
+            </Col>
+          </Row>
+          <Row>
+            <Credit />
+          </Row>
+        </Col>
+      </Row>
     </Container>
   );
 }
