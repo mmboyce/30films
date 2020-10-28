@@ -1,14 +1,22 @@
+/* eslint-disable no-unused-vars */
 import React/* , { useState } */ from 'react';
 import PropTypes from 'prop-types';
+
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
+import AutoSuggest from 'react-autosuggest';
+
 import './Film.css';
 
-function IndividualFilm(props) {
-  const { question, questionNumber } = props;
+function FilmFormEntry(props) {
+  const { question, questionNumber, apiPath } = props;
 
   return (
-    <div data-question-number={questionNumber}>
-      { question }
-    </div>
+    <Form.Group controlId={`results.question${questionNumber}`}>
+      <Form.Label>{question}</Form.Label>
+      <Form.Control type="text" />
+    </Form.Group>
   );
 }
 
@@ -48,7 +56,7 @@ export default function Film(props) {
 
   const questions = [
     // ------------ THIRTY QUESTIONS ------------
-    'What is a the first film you remember watching?',
+    'What is the first film you remember watching?',
     'What is a film you saw that starts with the first letter of your name?',
     'What is a film you saw that has more than five words in its title?',
     'What is a film you saw that has a number in its title?',
@@ -80,12 +88,12 @@ export default function Film(props) {
     'What film has your favourite ending?',
   ];
 
-  // Populate an array with IndividualFilm Components representing each question.
-  const individualFilms = (() => {
+  // Populate an array with FilmFormEntry Components representing each question.
+  const FilmFormEntries = (() => {
     const arr = [];
 
     for (let i = 0; i < questions.length; i += 1) {
-      arr.push(<IndividualFilm question={questions[i]} questionNumber={i} />);
+      arr.push(<FilmFormEntry question={questions[i]} questionNumber={i} />);
     }
 
     return arr;
@@ -93,10 +101,12 @@ export default function Film(props) {
   )();
 
   return (
-    <div>
-      {apiPath}
-      {individualFilms}
-    </div>
+    <Form>
+      {FilmFormEntries}
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
   );
 }
 
@@ -104,7 +114,8 @@ Film.propTypes = {
   apiPath: PropTypes.string.isRequired,
 };
 
-IndividualFilm.propTypes = {
+FilmFormEntry.propTypes = {
   question: PropTypes.string.isRequired,
   questionNumber: PropTypes.number.isRequired,
+  apiPath: PropTypes.string.isRequired,
 };
