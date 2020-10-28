@@ -10,7 +10,13 @@ import {
 import Home from './components/home/Home';
 import Results from './components/results/Results';
 
-const apiPath = 'http://192.168.1.226:3000';
+// Assign apiPath based on our host.
+const productionApiPath = 'https://thirtyfilms.herokuapp.com';
+const developmentApiPath = 'http://192.168.1.226:3000';
+
+const apiPath = window.location.origin === 'https://mmboyce.github.io'
+  ? productionApiPath
+  : developmentApiPath;
 
 // The server sleeps after 30min of inactivity, so to ensure the API responses are
 // quick, we ping the server. By pinging early, if the server is asleep it will be
