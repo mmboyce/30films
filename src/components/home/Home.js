@@ -18,18 +18,18 @@ export default function Home(props) {
   return (
     <Container fluid className="home">
       <Row>
-        <Col className="px-0">
+        <Col lg={{ span: 5, offset: 2 }} className="px-0">
           <Row className="mx-auto text-white">
-            <Col lg={{ span: 4, offset: 2 }} className="intro-bg py-2 vh-100">
+            <Col className="intro-bg py-2 vh-100">
               <Intro />
             </Col>
           </Row>
           <Row className="mx-auto">
-            <Col lg={{ span: 4, offset: 2 }} className="film-bg py-4">
+            <Col className="film-bg py-4">
               <Film apiPath={apiPath} />
             </Col>
           </Row>
-          <Row className="mx-auto">
+          <Row className="mx-auto tmdb-powered-by py-3">
             <Credit />
           </Row>
         </Col>

@@ -7,7 +7,7 @@ import './Credit.css';
 export default function Credit() {
   return (
     <>
-      <Col sm={{ span: 3, offset: 2 }} className="tmdb-powered-by py-3 pl-3 pr-0">
+      <Col>
         <p>Created By:</p>
         <a href="https://mmboyce.github.io" className="by-me">
           <span>
@@ -20,7 +20,7 @@ export default function Credit() {
           </span>
         </a>
       </Col>
-      <Col sm={{ span: 1, offset: 0 }} className="tmdb-powered-by py-3 pr-0 pl-3">
+      <Col className="py-2">
         <a href="https://www.themoviedb.org/">
           <img src={tmdbPrimaryFull} className="tmdb-logo" alt="tmdb" />
         </a>
