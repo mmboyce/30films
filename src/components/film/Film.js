@@ -1,28 +1,20 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-unused-vars */
-import React/* , { useState } */ from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import AutoSuggest from 'react-autosuggest';
+import Autosuggest from 'react-autosuggest';
 
 import './Film.css';
 
 function FilmFormEntry(props) {
-  const { question, questionNumber, apiPath } = props;
-
-  return (
-    <Form.Group controlId={`results.question${questionNumber}`}>
-      <Form.Label>{question}</Form.Label>
-      <Form.Control type="text" />
-    </Form.Group>
-  );
-}
-
-export default function Film(props) {
-  const { apiPath } = props;
-  /* const [searchResults, setSearchResults] = useState();
+  const {
+    question, questionNumber, apiPath, responses, setResponses,
+  } = props;
+  const [searchResults, setSearchResults] = useState([]);
+  const [entryValue, setEntryValue] = useState('');
 
   // Function for fetch search results from API, most likely goes with autosuggest.
   function getSearchResults(query) {
@@ -52,7 +44,56 @@ export default function Film(props) {
         })
         .catch((err) => reject(err));
     });
-  } */
+  }
+
+  // HELPERS FOR Autosuggest
+  const getSuggestionValue = (suggestion) => suggestion.title;
+  const renderSuggestion = (suggestion) => <div className="dropdown-item-text">{suggestion.title}</div>;
+
+  const inputOnChange = (event, { newValue }) => {
+    setEntryValue(newValue);
+  };
+
+  const loadSuggestions = (value) => {
+    getSearchResults(value).then((results) => setSearchResults(results));
+  };
+
+  const onSuggestionsFetchRequested = ({ value }) => {
+    // Restrict call frequency.
+    if (value.length === 2
+      || (value.length > 3 && value.length % 4 === 0)) {
+      loadSuggestions(value);
+    }
+  };
+
+  const onSuggestionsClearRequested = () => {
+    setSearchResults([]);
+  };
+
+  return (
+    <div className="form-group my-5">
+      <label className="mb-2" htmlFor={`question${questionNumber}`}>{question}</label>
+      <Autosuggest
+        suggestions={searchResults}
+        getSuggestionValue={getSuggestionValue}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        renderSuggestion={renderSuggestion}
+        inputProps={{
+          placeholder: 'Enter a Film Title.',
+          value: entryValue,
+          id: `question${questionNumber}`,
+          className: 'form-control',
+          onChange: inputOnChange,
+        }}
+      />
+    </div>
+  );
+}
+
+export default function Film(props) {
+  const { apiPath } = props;
+  const [responses, setResponses] = useState([]);
 
   const questions = [
     // ------------ THIRTY QUESTIONS ------------
@@ -93,7 +134,13 @@ export default function Film(props) {
     const arr = [];
 
     for (let i = 0; i < questions.length; i += 1) {
-      arr.push(<FilmFormEntry question={questions[i]} questionNumber={i} />);
+      arr.push(<FilmFormEntry
+        apiPath={apiPath}
+        question={questions[i]}
+        questionNumber={i}
+        responses={responses}
+        setResponses={setResponses}
+      />);
     }
 
     return arr;
@@ -101,12 +148,16 @@ export default function Film(props) {
   )();
 
   return (
-    <Form>
+    <form>
+      <div className="form-group mb-5">
+        <label htmlFor="userName"> What is your name?</label>
+        <input id="userName" type="text" className="form-control" />
+      </div>
       {FilmFormEntries}
       <Button variant="primary" type="submit">
         Submit
       </Button>
-    </Form>
+    </form>
   );
 }
 
@@ -118,4 +169,10 @@ FilmFormEntry.propTypes = {
   question: PropTypes.string.isRequired,
   questionNumber: PropTypes.number.isRequired,
   apiPath: PropTypes.string.isRequired,
+  responses: PropTypes.arrayOf({
+    title: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    popularity: PropTypes.number.isRequired,
+  }).isRequired,
+  setResponses: PropTypes.func.isRequired,
 };
