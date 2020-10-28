@@ -20,7 +20,7 @@ export default function Home(props) {
       <Row>
         <Col className="px-0">
           <Row className="mx-auto text-white">
-            <Col lg={{ span: 4, offset: 2 }} className="intro-bg py-2">
+            <Col lg={{ span: 4, offset: 2 }} className="intro-bg py-2 vh-100">
               <Intro />
             </Col>
           </Row>

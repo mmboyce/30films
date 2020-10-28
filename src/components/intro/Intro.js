@@ -24,7 +24,10 @@ export default function Intro() {
       <p>
         After filling out your responses, share your results with friends!
       </p>
-      <p className="small font-italic">This product uses the TMDb API but is not endorsed or certified by TMDb.</p>
+      <p>
+        Scroll down to begin the questionnaire!
+      </p>
+      <p className="small font-italic ">This product uses the TMDb API but is not endorsed or certified by TMDb.</p>
     </>
   );
 }

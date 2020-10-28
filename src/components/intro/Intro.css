@@ -1,9 +1,10 @@
 .intro-bg {
-  background-color: black;
+  background-color: #b5eafa;
+  background-image: linear-gradient(#b5eafa, #b5eafa, #b5eafa, white);
 }
 
-.intro-link {
-  color: white;
+.intro-bg>p, .intro-bg>h1, .intro-link {
+  color: #10314a;
 }
 
 .intro-link:hover {
