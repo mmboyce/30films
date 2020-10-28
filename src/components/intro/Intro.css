@@ -1,3 +1,12 @@
 .intro-bg {
   background-color: black;
 }
+
+.intro-link {
+  color: white;
+}
+
+.intro-link:hover {
+  color: white;
+  text-decoration: underline;
+}
