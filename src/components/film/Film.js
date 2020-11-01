@@ -5,16 +5,19 @@ import PropTypes from 'prop-types';
 
 import Button from 'react-bootstrap/Button';
 
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import Autosuggest from 'react-autosuggest';
 
 import './Film.css';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 function FilmFormEntry(props) {
   const {
     question, questionNumber, apiPath, responses, setResponses,
   } = props;
   const [searchResults, setSearchResults] = useState([]);
-  const [entryValue, setEntryValue] = useState('');
+  const [entryValue, setEntryValue] = useState({});
+  const [typeaheadIsLoading, setTypeaheadIsLoading] = useState(false);
 
   // Function for fetch search results from API, most likely goes with autosuggest.
   function getSearchResults(query) {
@@ -46,46 +49,39 @@ function FilmFormEntry(props) {
     });
   }
 
-  // HELPERS FOR Autosuggest
-  const getSuggestionValue = (suggestion) => suggestion.title;
-  const renderSuggestion = (suggestion) => <div className="dropdown-item-text">{suggestion.title}</div>;
+  // HELPERS FOR AsyncTypeahead
+  const handleSearch = (query) => {
+    setTypeaheadIsLoading(true);
 
-  const inputOnChange = (event, { newValue }) => {
-    setEntryValue(newValue);
+    getSearchResults(query)
+      .then((results) => {
+        setSearchResults(results);
+        setTypeaheadIsLoading(false);
+      }).catch((err) => setTypeaheadIsLoading(false));
   };
 
-  const loadSuggestions = (value) => {
-    getSearchResults(value).then((results) => setSearchResults(results));
-  };
-
-  const onSuggestionsFetchRequested = ({ value }) => {
-    // Restrict call frequency.
-    if (value.length === 2
-      || (value.length > 3 && value.length % 4 === 0)) {
-      loadSuggestions(value);
-    }
-  };
-
-  const onSuggestionsClearRequested = () => {
-    setSearchResults([]);
-  };
+  // Bypass client-side filtering by returning `true`. Results are already
+  // filtered by the search endpoint, so no need to do it again.
+  const filterBy = () => true;
 
   return (
     <div className="form-group my-5">
       <label className="mb-2" htmlFor={`question${questionNumber}`}>{question}</label>
-      <Autosuggest
-        suggestions={searchResults}
-        getSuggestionValue={getSuggestionValue}
-        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={onSuggestionsClearRequested}
-        renderSuggestion={renderSuggestion}
-        inputProps={{
-          placeholder: 'Enter a Film Title.',
-          value: entryValue,
-          id: `question${questionNumber}`,
-          className: 'form-control',
-          onChange: inputOnChange,
-        }}
+      <AsyncTypeahead
+        filterBy={filterBy}
+        flip
+        highlightOnlyResult
+        id={`question${questionNumber}`}
+        isLoading={typeaheadIsLoading}
+        labelKey="title"
+        minLength={1}
+        onSearch={handleSearch}
+        options={searchResults}
+        placeholder="Search a film..."
+        renderMenuItemChildren={(option) => (
+          <span>{option.title}</span>
+        )}
+        useCache={false}
       />
     </div>
   );
