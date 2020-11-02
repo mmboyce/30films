@@ -16,7 +16,7 @@ function FilmFormEntry(props) {
     question, questionNumber, apiPath, responses, setResponses,
   } = props;
   const [searchResults, setSearchResults] = useState([]);
-  const [entryValue, setEntryValue] = useState({});
+  const [entryValue, setEntryValue] = useState('');
   const [typeaheadIsLoading, setTypeaheadIsLoading] = useState(false);
 
   // Function for fetch search results from API, most likely goes with autosuggest.
@@ -50,6 +50,18 @@ function FilmFormEntry(props) {
   }
 
   // HELPERS FOR AsyncTypeahead
+  const handleChange = (selected) => {
+    // when not multiple selections, selected will always be an array of length 1;
+    const selection = selected[0];
+    setEntryValue(selected);
+
+    // Clone array as state is immutable
+    const newResponses = responses.slice();
+    newResponses[questionNumber] = selection;
+
+    setResponses(newResponses);
+  };
+
   const handleSearch = (query) => {
     setTypeaheadIsLoading(true);
 
@@ -59,6 +71,8 @@ function FilmFormEntry(props) {
         setTypeaheadIsLoading(false);
       }).catch((err) => setTypeaheadIsLoading(false));
   };
+
+  // TODO: Handle Validation
 
   // Bypass client-side filtering by returning `true`. Results are already
   // filtered by the search endpoint, so no need to do it again.
@@ -75,12 +89,14 @@ function FilmFormEntry(props) {
         isLoading={typeaheadIsLoading}
         labelKey="title"
         minLength={1}
+        onChange={handleChange}
         onSearch={handleSearch}
         options={searchResults}
         placeholder="Search a film..."
         renderMenuItemChildren={(option) => (
           <span>{option.title}</span>
         )}
+        selected={entryValue}
         useCache={false}
       />
     </div>
