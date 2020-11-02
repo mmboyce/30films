@@ -22,6 +22,8 @@ function FilmFormEntry(props) {
 
   // Function for fetch search results from API, most likely goes with autosuggest.
   function getSearchResults(query) {
+    const posterUrlBase = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2';
+
     return new Promise((resolve, reject) => {
       fetch(`${apiPath}/search/${query}`, { mode: 'cors' })
         .then((response) => response.json())
@@ -32,7 +34,7 @@ function FilmFormEntry(props) {
             const {
               title, id, popularity,
             } = result;
-            const posterPath = result.poster_path ? result.poster_path : '';
+            const posterPath = result.poster_path ? posterUrlBase + result.poster_path : '';
             const releaseDate = result.release_date;
             const releaseYear = releaseDate ? ` (${releaseDate.substr(0, 4)})` : '';
 
