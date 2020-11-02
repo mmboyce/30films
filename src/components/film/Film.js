@@ -3,10 +3,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { Redirect } from 'react-router-dom';
+
 import Button from 'react-bootstrap/Button';
 
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
-import Autosuggest from 'react-autosuggest';
 
 import './Film.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -31,6 +32,7 @@ function FilmFormEntry(props) {
             const {
               title, id, popularity,
             } = result;
+            const posterPath = result.poster_path ? result.poster_path : '';
             const releaseDate = result.release_date;
             const releaseYear = releaseDate ? ` (${releaseDate.substr(0, 4)})` : '';
 
@@ -38,6 +40,7 @@ function FilmFormEntry(props) {
               title: `${title}${releaseYear}`,
               id,
               popularity,
+              posterPath,
             };
           });
 
@@ -106,6 +109,8 @@ function FilmFormEntry(props) {
 export default function Film(props) {
   const { apiPath } = props;
   const [responses, setResponses] = useState([]);
+  const [name, setName] = useState('');
+  const [resultsRedirect, setResultsRedirect] = useState(<></>);
 
   const questions = [
     // ------------ THIRTY QUESTIONS ------------
@@ -159,16 +164,62 @@ export default function Film(props) {
   }
   )();
 
+  const handlePost = (requestObject) => new Promise((resolve, reject) => {
+    fetch(`${apiPath}/results`, {
+      mode: 'cors',
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestObject),
+    }).then((response) => response.json())
+      .then((resultsResponse) => resolve(resultsResponse))
+      .catch((err) => reject(err));
+  });
+
+  const validateInputs = (requestObject) => {
+    // TODO: Validation
+    const isValidated = true;
+    return isValidated;
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    const requestObject = {
+      name,
+      films: responses,
+    };
+
+    if (validateInputs(requestObject)) {
+      handlePost(requestObject).then((response) => {
+        setResultsRedirect(<Redirect to={response.url} />);
+      });
+    }
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
   return (
     <form>
       <div className="form-group mb-5">
         <label htmlFor="userName"> What is your name?</label>
-        <input id="userName" type="text" className="form-control" />
+        <input
+          id="userName"
+          value={name}
+          onChange={handleNameChange}
+          type="text"
+          className="form-control"
+        />
       </div>
       {FilmFormEntries}
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" onClick={handleClick}>
         Submit
       </Button>
+      {resultsRedirect}
     </form>
   );
 }
