@@ -1,70 +1,24 @@
-# Getting Started with Create React App
+# 30Films
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**!still in development!**
 
-## Available Scripts
+This is a MERN Stack app inspired by the 30 Day Film Challenge. 
 
-In the project directory, you can run:
+![30 Day Movie Challenge](https://i.imgur.com/O1VO4iO.png)
 
-### `yarn start`
+## Frontend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The frontend portion is a questionnaire built in ReactJS that makes GET and POST requests to the backend. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Users provide their names, and responses to each question. The input fields for the film questions use typeahead to suggest movie titles. 
 
-### `yarn test`
+After submitting their responses, users are shown their list of answers, styled with the posters for the movies and the link to their [TMDb](https://www.themoviedb.org/) entries. Additionally, users are  provided a link to share their answers with friends.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Backend
 
-### `yarn build`
+The backend portion is an API written in Express, [hosted on heroku](https://thirtyfilms.herokuapp.com), to handle searching films for the typeahead in the frontend, and serving user results.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Search is completed by making calls to [The Movie Database's API](https://www.themoviedb.org/documentation/api) using [cavestri's](https://github.com/cavestri) [tmdb-javascript-library](https://github.com/cavestri/themoviedb-javascript-library/). These responses (filtered and sorted by popularity by the frontend) are used to populate the suggestions in the typeaheads.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Responses are stored in the MongoDB collection and contain the user's provided name, and their answers. Each film contains its TMDb ID, poster path, and title. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
