@@ -1,16 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import Card from 'react-bootstrap/Card';
-import CardColumns from 'react-bootstrap/CardColumns';
 
 function FilmCardGroup(props) {
   const { FilmCards } = props;
 
+  const firstCol = FilmCards.slice(0, 10);
+  const secondCol = FilmCards.slice(10, 20);
+  const thirdCol = FilmCards.slice(20, 30);
+
   return (
-    <CardColumns className="p-2">
-      {FilmCards}
-    </CardColumns>
+    <Row>
+      <Col lg>
+        {firstCol}
+      </Col>
+      <Col lg>
+        {secondCol}
+      </Col>
+      <Col lg>
+        {thirdCol}
+      </Col>
+    </Row>
   );
 }
 
@@ -21,12 +35,19 @@ export default function FilmCard(props) {
   const baseTMDbUrl = 'https://www.themoviedb.org/movie/';
 
   return (
-    <Card className="sm" style={{ width: '14rem' }}>
-      <Card.Img variant="top" src={posterPath} />
+    <Card className="my-4 mx-auto">
       <Card.Body>
-        <Card.Title><a href={baseTMDbUrl + id}>{title}</a></Card.Title>
-        <Card.Text>{question}</Card.Text>
+        <Card.Title>{question}</Card.Title>
+        <Card.Subtitle className="ml-2">
+          <em>
+            {' '}
+            -
+            {' '}
+            <a href={baseTMDbUrl + id}>{title}</a>
+          </em>
+        </Card.Subtitle>
       </Card.Body>
+      <Card.Img variant="bottom" src={posterPath} />
     </Card>
   );
 }
