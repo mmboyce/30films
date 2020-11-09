@@ -40,7 +40,7 @@ function FilmFormEntry(props) {
 
             return {
               title: `${title}${releaseYear}`,
-              id,
+              tmdbId: id,
               popularity,
               posterPath,
             };
@@ -129,7 +129,7 @@ export default function Film(props) {
     'What is a film you like from your least favourite genre?',
     'What is a film that you hate from your favourite genre?',
     'What is a film that puts you deep in thought?',
-    'What is a film that depressed you most?',
+    'What is the film that depressed you most?',
     'What is a film that makes you feel happy?',
     'What is a film that is personal to you?',
     'What is your favourite film sequel?',
