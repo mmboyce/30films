@@ -15,3 +15,8 @@
   text-decoration: none;
   color: blue;
 }
+
+.credits-nav-list {
+  padding: 0;
+  list-style: none;
+}

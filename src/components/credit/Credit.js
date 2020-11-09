@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import Col from 'react-bootstrap/Col';
 
 import tmdbPrimaryFull from './tmdb_primary_full.svg';
@@ -9,16 +11,23 @@ export default function Credit() {
     <>
       <Col>
         <p>Created By:</p>
-        <a href="https://mmboyce.github.io" className="by-me">
-          <span>
-            W Mathieu
-            {' '}
-          </span>
-          <span>
-            {/* &#8209; = non-breaking hyphen */}
-            Mimms&#8209;Boyce
-          </span>
-        </a>
+        <ul className="credits-nav-list">
+          <li>
+            <a href="https://mmboyce.github.io" className="by-me">
+              <span>
+                W Mathieu
+                {' '}
+              </span>
+              <span>
+                {/* &#8209; = non-breaking hyphen */}
+                Mimms&#8209;Boyce
+              </span>
+            </a>
+          </li>
+          <li className="mt-2">
+            <Link to="/results">Stats</Link>
+          </li>
+        </ul>
       </Col>
       <Col className="py-2">
         <a href="https://www.themoviedb.org/">
