@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import RouteTemplate from '../routeTemplate/RouteTemplate';
-import FilmCard from '../filmCard/FilmCard';
+import FilmCard, { FilmCardGroup } from '../filmCard/FilmCard';
 
 import './Results.css';
 
@@ -93,7 +93,7 @@ function IndividualResults(props) {
     </h2>
   );
 
-  return <ResultsTemplate head={head} body={filmCards} />;
+  return <ResultsTemplate head={head} body={<FilmCardGroup FilmCards={filmCards} />} />;
 }
 
 // Individual when true denotes whether this is the results page for a specific user, or for all
