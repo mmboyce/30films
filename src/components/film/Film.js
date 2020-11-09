@@ -155,7 +155,7 @@ export default function Film(props) {
     for (let i = 0; i < questions.length; i += 1) {
       arr.push(<FilmFormEntry
         apiPath={apiPath}
-        question={questions[i]}
+        question={`${i + 1}. ${questions[i]}`}
         questionNumber={i}
         responses={responses}
         setResponses={setResponses}
