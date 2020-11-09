@@ -12,7 +12,7 @@ import Results from './components/results/Results';
 
 // Assign apiPath based on our host.
 const productionApiPath = 'https://thirtyfilms.herokuapp.com';
-const developmentApiPath = 'http://192.168.1.226:3000';
+const developmentApiPath = 'http://192.168.1.221:3000';
 
 const apiPath = window.location.origin === 'https://mmboyce.github.io'
   ? productionApiPath
@@ -33,6 +33,9 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/results/:id">
+          <Results apiPath={apiPath} individual />
+        </Route>
         <Route path="/results">
           <Results apiPath={apiPath} />
         </Route>
