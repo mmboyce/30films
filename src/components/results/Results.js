@@ -88,7 +88,6 @@ function IndividualResults(props) {
   const head = (
     <h2>
       {name}
-      {' '}
       &apos;s Results
     </h2>
   );
