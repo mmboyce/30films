@@ -16,7 +16,7 @@ export default function Home(props) {
   return (
     <RouteTemplate className="home">
       <Row className="mx-auto text-white">
-        <Col className="intro-bg py-2 vh-100">
+        <Col className="intro-bg py-2 min-vh-100">
           <Intro />
         </Col>
       </Row>

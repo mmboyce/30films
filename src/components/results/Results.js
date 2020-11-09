@@ -157,7 +157,7 @@ export default function Results(props) {
   return (
     <RouteTemplate className="results">
       <Row className="mx-auto">
-        <Col className="results-bg vh-100" on>
+        <Col className="results-bg min-vh-100" on>
           {loadBody()}
         </Col>
       </Row>
