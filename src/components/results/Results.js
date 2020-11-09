@@ -73,14 +73,12 @@ function IndividualResults(props) {
 
     for (let i = 0; i < questions.length; i += 1) {
       filmCardsList[i] = (
-        <li>
-          <FilmCard
-            title={filmList[i].title}
-            posterPath={filmList[i].posterPath}
-            question={questions[i]}
-            id={filmList[i].tmdbId}
-          />
-        </li>
+        <FilmCard
+          title={filmList[i].title}
+          posterPath={filmList[i].posterPath}
+          question={questions[i]}
+          id={filmList[i].tmdbId}
+        />
       );
     }
 
@@ -94,9 +92,8 @@ function IndividualResults(props) {
       &apos;s Results
     </h2>
   );
-  const body = <ul>{filmCards}</ul>;
 
-  return <ResultsTemplate head={head} body={body} />;
+  return <ResultsTemplate head={head} body={filmCards} />;
 }
 
 // Individual when true denotes whether this is the results page for a specific user, or for all

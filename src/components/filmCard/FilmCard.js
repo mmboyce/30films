@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import Card from 'react-bootstrap/Card'; TODO
+import Card from 'react-bootstrap/Card';
 
 export default function FilmCard(props) {
   const {
@@ -10,11 +10,13 @@ export default function FilmCard(props) {
   const baseTMDbUrl = 'https://www.themoviedb.org/movie/';
 
   return (
-    <div>
-      <a href={baseTMDbUrl + id}>{title}</a>
-      <img src={posterPath} alt={`Poster for ${title}`} />
-      {question}
-    </div>
+    <Card style={{ width: '18rem' }}>
+      <Card.Img variant="top" src={posterPath} />
+      <Card.Body>
+        <Card.Title><a href={baseTMDbUrl + id}>{title}</a></Card.Title>
+        <Card.Text>{question}</Card.Text>
+      </Card.Body>
+    </Card>
   );
 }
 
