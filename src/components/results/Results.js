@@ -5,25 +5,98 @@ import { useParams } from 'react-router-dom';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-// import Card from 'react-bootstrap/Card'; TODO
 
 import RouteTemplate from '../routeTemplate/RouteTemplate';
+import FilmCard from '../filmCard/FilmCard';
 
 import './Results.css';
 
+function ResultsTemplate(props) {
+  const { head, body } = props;
+
+  return (
+    <>
+      <Row>
+        <Col className="mt-4">
+          {head}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {body}
+        </Col>
+      </Row>
+    </>
+  );
+}
+
+// This is what will be rendered when an indivudal's results are being requested.
 function IndividualResults(props) {
   const { filmList, name } = props;
 
-  return (
-    <div>
-      { name}
-      &apos;results
-      <ol>
-        film list
-        {filmList}
-      </ol>
-    </div>
+  // ------------ THIRTY QUESTIONS (BUT FORMATTED FOR SUBMITTED RESPONSES) ------------
+  const questions = [
+    'The first film I remember watching.',
+    'A film I saw that starts with the first letter of my name.',
+    'A film I saw that has more than five words in its title.',
+    'A film I saw that has a number in its title.',
+    'A film I saw where a character has a job that I want.',
+    'My favorite animated film.',
+    'A film that I will never get tired of watching.',
+    'A film whose soundtrack I enjoy more than the film itself.',
+    'A film I hate that everyone else liked.',
+    'My favorite superhero film.',
+    'A film I like from my least favourite genre.',
+    'A film that I hate from my favourite genre.',
+    'A film that puts me deep in thought.',
+    'The film that depressed me most.',
+    'A film that makes me feel happy.',
+    'A film that is personal to me.',
+    'My favourite film sequel.',
+    'A film that stars my favourite actor/actress.',
+    'A film made by my favourite director.',
+    'A film that changed my life.',
+    'A film that I dozed off in.',
+    'A film that made me angry.',
+    'A film made by a director that is dead.',
+    'A film I saw out of theaters that wish I saw in theaters.',
+    'A film that I like that is not set in the current era.',
+    'A film I like that is adapted from another piece of media.',
+    'A film that is visually striking to me.',
+    'A film that made me feel uncomfortable.',
+    'A film that makes me want to fall in love.',
+    'The film that has my favourite ending.',
+  ];
+
+  const filmCards = (function populateFilmCards() {
+    const filmCardsList = [];
+
+    for (let i = 0; i < questions.length; i += 1) {
+      filmCardsList[i] = (
+        <li>
+          <FilmCard
+            title={filmList[i].title}
+            posterPath={filmList[i].posterPath}
+            question={questions[i]}
+            id={filmList[i].tmdbId}
+          />
+        </li>
+      );
+    }
+
+    return filmCardsList;
+  }());
+
+  const head = (
+    <h2>
+      {name}
+      {' '}
+      &apos;s Results
+    </h2>
   );
+  const body = <ul>{filmCards}</ul>;
+
+  return <ResultsTemplate head={head} body={body} />;
 }
 
 // Individual when true denotes whether this is the results page for a specific user, or for all
@@ -39,47 +112,20 @@ export default function Results(props) {
       .then((resp) => setResponse(resp));
   };
 
-  const loadHead = () => {
-    let headContent;
-
+  useEffect(() => {
     if (JSON.stringify(response) === JSON.stringify({})) {
-      headContent = <h2>Loading Results...</h2>;
-    } else if (individual) {
-      // TODO: refactor this into IndividualResult component
-      headContent = (
-        <h2>
-          {response.name}
-          &apos;s Results
-        </h2>
-      );
-    } else {
-      headContent = <h2>Response Stats</h2>;
+      handleLoad();
     }
-    return (
-      <Row>
-        <Col className="mt-4">
-          {headContent}
-        </Col>
-      </Row>
-    );
-  };
+  });
 
   const loadBody = () => {
-    let bodyContent;
+    let body;
 
+    // Display loading info.
     if (JSON.stringify(response) === JSON.stringify({})) {
-      bodyContent = '';
-      // TODO: refactor this into IndividualResult component
-    } else if (individual) {
-      const { films } = response;
-      const filmTitles = films.map((film) => <li>{film.title}</li>);
-
-      bodyContent = (
-        <ul>
-          {filmTitles}
-        </ul>
-      );
-    } else {
+      const loadingHeader = <h2>Loading Results...</h2>;
+      body = <ResultsTemplate head={loadingHeader} />;
+    } else if (!individual) {
       const { results } = response;
       const resultNames = results.map((result) => (
         <li>
@@ -87,7 +133,8 @@ export default function Results(props) {
         </li>
       ));
 
-      bodyContent = (
+      const groupHeader = <h2>Response Stats</h2>;
+      const groupBody = (
         <>
           <p>
             Response Count:
@@ -99,29 +146,22 @@ export default function Results(props) {
           </ul>
         </>
       );
+
+      body = <ResultsTemplate head={groupHeader} body={groupBody} />;
+    } else {
+      const { films, name } = response;
+
+      body = <IndividualResults filmList={films} name={name} />;
     }
 
-    return (
-      <Row>
-        <Col>
-          {bodyContent}
-        </Col>
-      </Row>
-    );
+    return body;
   };
-
-  useEffect(() => {
-    if (JSON.stringify(response) === JSON.stringify({})) {
-      handleLoad();
-    }
-  });
 
   // TODO: Use IndividualResult component!!
   return (
     <RouteTemplate className="results">
       <Row className="mx-auto">
         <Col className="results-bg vh-100" on>
-          {loadHead()}
           {loadBody()}
         </Col>
       </Row>
@@ -145,4 +185,14 @@ IndividualResults.propTypes = {
     title: PropTypes.string.isRequired,
     posterPath: PropTypes.string.isRequired,
   })).isRequired,
+};
+
+ResultsTemplate.propTypes = {
+  head: PropTypes.element,
+  body: PropTypes.element,
+};
+
+ResultsTemplate.defaultProps = {
+  head: <></>,
+  body: <></>,
 };
