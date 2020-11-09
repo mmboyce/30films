@@ -3,11 +3,25 @@
   background-image: linear-gradient(#b5eafa, #b5eafa, #b5eafa, white);
 }
 
-.intro-bg>p, .intro-bg>h1, .intro-link {
+.intro-bg>p, .intro-bg>h1,
+.intro-truncated-bg>a,
+ .intro-link {
   color: #10314a;
 }
 
 .intro-link:hover {
   color: white;
   text-decoration: underline;
+}
+
+.intro-truncated {
+  margin: 0;
+}
+
+.intro-truncated-bg>a:hover {
+  text-decoration: none;
+}
+
+.intro-truncated-bg {
+  background-color: #b5eafa;
 }

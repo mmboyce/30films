@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import RouteTemplate from '../routeTemplate/RouteTemplate';
+import Intro from '../intro/Intro';
 import FilmCard, { FilmCardGroup } from '../filmCard/FilmCard';
 
 import './Results.css';
@@ -155,6 +156,11 @@ export default function Results(props) {
 
   return (
     <RouteTemplate className="results">
+      <Row className="mx-auto">
+        <Col className="py-2 intro-truncated-bg">
+          <Intro truncated />
+        </Col>
+      </Row>
       <Row className="mx-auto">
         <Col className="results-bg min-vh-100" on>
           {loadBody()}
