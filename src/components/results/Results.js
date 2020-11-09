@@ -157,7 +157,6 @@ export default function Results(props) {
     return body;
   };
 
-  // TODO: Use IndividualResult component!!
   return (
     <RouteTemplate className="results">
       <Row className="mx-auto">
