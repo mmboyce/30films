@@ -109,6 +109,7 @@ export default function Results(props) {
       .then((resp) => setResponse(resp));
   };
 
+  // Call handleLoad once while response is not yet loaded.
   useEffect(() => {
     if (JSON.stringify(response) === JSON.stringify({})) {
       handleLoad();
