@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import Col from 'react-bootstrap/Col';
 
@@ -25,7 +24,7 @@ export default function Credit() {
             </a>
           </li>
           <li className="mt-2">
-            <Link to="/results">Stats</Link>
+            <a href="/results">Stats</a>
           </li>
         </ul>
       </Col>
