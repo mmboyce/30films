@@ -14,9 +14,19 @@ import Results from './components/results/Results';
 const productionApiPath = 'https://thirtyfilms.herokuapp.com';
 const developmentApiPath = 'http://192.168.1.221:3000';
 
-const apiPath = window.location.origin === 'https://30films.netlify.app/'
-  ? productionApiPath
-  : developmentApiPath;
+function hasProductionOrigin() {
+  let isProduction = false;
+  const originPath = window.location.origin;
+  const developmentRegEx = /(localhost|192\.\d+\.\d+\.\d+):\d+/;
+
+  if ((originPath.match(developmentRegEx)) === null) {
+    isProduction = true;
+  }
+
+  return isProduction;
+}
+
+const apiPath = hasProductionOrigin() ? productionApiPath : developmentApiPath;
 
 // The server sleeps after 30min of inactivity, so to ensure the API responses are
 // quick, we ping the server. By pinging early, if the server is asleep it will be
