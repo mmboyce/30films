@@ -14,7 +14,7 @@ import Results from './components/results/Results';
 const productionApiPath = 'https://thirtyfilms.herokuapp.com';
 const developmentApiPath = 'http://192.168.1.221:3000';
 
-const apiPath = window.location.origin === 'https://mmboyce.github.io'
+const apiPath = window.location.origin === 'https://30films.netlify.app/'
   ? productionApiPath
   : developmentApiPath;
 
