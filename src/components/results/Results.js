@@ -163,7 +163,7 @@ export default function Results(props) {
         </Col>
       </Row>
       <Row className="mx-auto">
-        <Col className="results-bg min-vh-100" on>
+        <Col className="results-bg min-vh-100">
           {loadBody()}
         </Col>
       </Row>
