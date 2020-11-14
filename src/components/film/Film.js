@@ -95,6 +95,13 @@ function FilmFormEntry(props) {
         labelKey="title"
         minLength={1}
         onChange={handleChange}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            // TODO: if drop down active, pick the one selected!
+            // ANDOR if all inputs validated, submit
+          }
+        }}
         onSearch={handleSearch}
         options={searchResults}
         placeholder="Search a film..."
